@@ -25,7 +25,7 @@ let fetchWeatherData = function(req, res, next) {
       res.json(response.data);
     })
     .catch(function(err) {
-      res.send(err);
+      console.log(err);
     });
 };
 
@@ -36,12 +36,12 @@ let cacheWeather = () => {
     let cachedBody = mcache.get(key);
     if (cachedBody) {
       // For debugging cache
-      // console.log("CACHE is used");
+      console.log("CACHE is used");
       res.send(cachedBody);
       return;
     } else {
       // For debugging cache
-      // console.log("FETCH is used");
+      console.log("FETCH is used");
       res.sendResponse = res.send;
       res.send = body => {
         mcache.put(key, body, 5 * 60 * 1000);
