@@ -20,9 +20,7 @@
 
     <div>
       <div class="display-text-large">
-        <wind-widget :speed="weatherData.currently.windSpeed"
-          :gust="weatherData.currently.windGust"
-          :deg="weatherData.currently.windBearing"></wind-widget>
+        <wind-widget v-bind="currentWind"></wind-widget>
       </div>
     </div>
 
@@ -60,6 +58,7 @@ export default {
       currentTemperature: "getCurrentTemperature",
       currentHumidity: "getCurrentHumidity",
       currentPressure: "getCurrentPressure",
+      currentWind: "getCurrentWind",
       currentIcon: "getCurrentIcon",
       lastFetch: "getLastFetchDate"
     })

@@ -19,6 +19,7 @@ export default new Vuex.Store({
   },
   actions: {
     loadWeatherData({ commit }) {
+      console.log("load data ...");
       axios
         .get(process.env.VUE_APP_HOMESCREEN_SERVER_URL + "/data")
         .then(function(response) {
@@ -42,6 +43,19 @@ export default new Vuex.Store({
       return state.weatherDataLoaded
         ? Math.round(state.weatherData.currently.pressure)
         : "";
+    },
+    getCurrentWind: state => {
+      return state.weatherDataLoaded
+        ? {
+            speed: state.weatherData.currently.windSpeed,
+            deg: state.weatherData.currently.windBearing,
+            gust: state.weatherData.currently.windGust
+          }
+        : {
+            speed: 0,
+            deg: 0,
+            gust: 0
+          };
     },
     getCurrentIcon: state => {
       return state.weatherDataLoaded ? state.weatherData.currently.icon : "";
