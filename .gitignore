@@ -4,6 +4,7 @@ node_modules
 /public/sample_data
 
 # local env files
+.env
 .env.local
 .env.*.local
 

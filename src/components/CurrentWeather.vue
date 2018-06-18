@@ -1,44 +1,33 @@
 <template>
   <div class="grid-layout-weather">
     <div>
-      <h1>Current Conditions</h1>
-      <table>
-        <tbody>
-          <tr>
-            <td>{{ currentTemperature }}&deg;</td>
-            <td>{{ currentHumidity }}%</td>
-            <td>{{ currentPressure }}&rho;</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>Temperature</th>
-            <th>Humidity</th>
-            <th>Pressure</th>
-          </tr>
-        </tfoot>
-      </table>
-
-      <wind-widget :speed="weatherData.currently.windSpeed"
-        :gust="weatherData.currently.windGust"
-        :deg="weatherData.currently.windBearing"></wind-widget>
-
-      <i class="wi wi-day-cloudy"></i>
+      <div class="display-text-large">
+        <icon-widget :icon="currentIcon"></icon-widget>
+      </div>
     </div>
 
     <div>
-      Low: {{ weather.main.temp_min }}&deg;<br>
-      High: {{ weather.main.temp_max }}&deg;
+      <div class="display-text-large">
+        {{ currentTemperature }} <i class="wi wi-fahrenheit"></i>
+      </div>
     </div>
 
     <div>
-      Low: {{ weather.main.temp_min }}&deg;<br>
-      High: {{ weather.main.temp_max }}&deg;
+      <div class="display-text-large">
+        {{ currentHumidity }} <i class="wi wi-humidity"></i>
+      </div>
     </div>
 
     <div>
-      Low: {{ weather.main.temp_min }}&deg;<br>
-      High: {{ weather.main.temp_max }}&deg;
+      <div class="display-text-large">
+        <wind-widget :speed="weatherData.currently.windSpeed"
+          :gust="weatherData.currently.windGust"
+          :deg="weatherData.currently.windBearing"></wind-widget>
+      </div>
+    </div>
+
+    <div class="update-info">
+      <span>Last updated: {{ lastFetch }}</span>
     </div>
   </div>
 </template>
@@ -46,11 +35,13 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import WindWidget from "@/components/WindWidget";
+import IconWidget from "@/components/IconWidget";
 
 export default {
   name: "current-weather",
   components: {
-    WindWidget
+    WindWidget,
+    IconWidget
   },
   data() {
     return {
@@ -64,11 +55,13 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(["weatherData"]),
+    ...mapState(["weatherData", "weatherDataLastUpdate"]),
     ...mapGetters({
       currentTemperature: "getCurrentTemperature",
       currentHumidity: "getCurrentHumidity",
-      currentPressure: "getCurrentPressure"
+      currentPressure: "getCurrentPressure",
+      currentIcon: "getCurrentIcon",
+      lastFetch: "getLastFetchDate"
     })
   }
 };
@@ -78,27 +71,23 @@ export default {
 .grid-layout-weather
   display: grid
   grid-gap: 0px
-  grid-template-columns: repeat(5, 1fr)
+  grid-template-columns: repeat(4, 1fr)
+  grid-template-rows: 1fr, 1.5rem
   height: 100%
   width: 100%
+  background: #444
+  color: #fff
 
   &>div
     align-self: center
     justify-self: center
 
-  &>div:nth-of-type(1)
-    grid-column: 1 / 3
-    justify-self: left
-    width: 100%
+.update-info
+  font-size: 0.75rem
+  line-height: 1.5rem
+  text-align: center
+  grid-column: 1 / 5
 
-table
-  width: 100%
 
-  td, th
-    text-align: center
-    width: 33.3%
-
-  td
-    font-size: 2.5rem
 
 </style>

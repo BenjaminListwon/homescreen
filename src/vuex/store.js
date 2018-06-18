@@ -1,6 +1,6 @@
+import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import { HTTP } from "@/helpers/http-common";
 
 Vue.use(Vuex);
 
@@ -19,10 +19,12 @@ export default new Vuex.Store({
   },
   actions: {
     loadWeatherData({ commit }) {
-      HTTP.get("/sample_data/darksky.json").then(function(response) {
-        commit("SET_WEATHER_DATA", response.data);
-        commit("SET_WEATHER_DATA_LOADED", true);
-      });
+      axios
+        .get(process.env.VUE_APP_HOMESCREEN_SERVER_URL + "/data")
+        .then(function(response) {
+          commit("SET_WEATHER_DATA", response.data);
+          commit("SET_WEATHER_DATA_LOADED", true);
+        });
     }
   },
   getters: {
@@ -40,6 +42,12 @@ export default new Vuex.Store({
       return state.weatherDataLoaded
         ? Math.round(state.weatherData.currently.pressure)
         : "";
+    },
+    getCurrentIcon: state => {
+      return state.weatherDataLoaded ? state.weatherData.currently.icon : "";
+    },
+    getLastFetchDate: state => {
+      return state.weatherDataLoaded ? state.weatherData.lastFetch : "";
     }
   }
 });

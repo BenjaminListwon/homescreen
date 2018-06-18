@@ -13,7 +13,9 @@ export default {
     return {};
   },
   created() {
+    let me = this;
     this.loadWeatherData();
+    window.setInterval(me.loadWeatherData, 5 * 60 * 1000);
   },
   computed: {
     ...mapState(["weatherData"])
@@ -37,18 +39,7 @@ body
   color: #2c3e50
 
 
-.centering-container
-  text-align: center
-  white-space: nowrap
-
-  &:before
-    content: '\200B'
-    display: inline-block
-    height: 100%
-    vertical-align: middle
-    margin-right: -0.25em
-
-.to-center
-  display: inline-block
-  vertical-align: middle
+.display-text-large
+  font-size: 15vh
+  line-height: 15vh
 </style>

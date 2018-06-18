@@ -1,7 +1,9 @@
 <template>
 <div class="date">
   <span>{{ currDayName }}</span>
-  {{ currMonthName }} {{ currDay }}
+  <div class="display-text-large">
+    {{ currMonthName }} {{ currDay }}
+  </div>
   <span>{{ currYear }}</span>
 </div>
 </template>
@@ -39,8 +41,7 @@ export default {
 <style lang="sass" scoped>
 .date
   text-align: center
-  font-size: 6rem
-  line-height: 6rem
+
   
   span
     font-size: 2rem

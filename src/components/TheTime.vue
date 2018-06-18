@@ -1,7 +1,9 @@
 <template>
   <div class="time">
     <span>&nbsp;</span>
-    {{ currFullTime }}
+    <div class="display-text-large">
+      {{ currFullTime }}
+    </div>
     <span>{{ currTimeAmPm }}</span>
   </div>
 </template>
@@ -40,8 +42,6 @@ export default {
 <style lang="sass" scoped>
 .time
   text-align: center
-  font-size: 6rem
-  line-height: 6rem
 
   span
     font-size: 2rem
