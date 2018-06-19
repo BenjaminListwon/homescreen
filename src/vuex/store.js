@@ -1,13 +1,15 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
+import request from "request";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     weatherData: {},
-    weatherDataLoaded: false
+    weatherDataLoaded: false,
+    weatherDataLastFetch: null
   },
   mutations: {
     SET_WEATHER_DATA(state, payload) {
@@ -15,11 +17,13 @@ export default new Vuex.Store({
     },
     SET_WEATHER_DATA_LOADED(state, payload) {
       state.weatherDataLoaded = payload;
+    },
+    SET_WEATHER_DATA_LAST_FETCH(state, payload) {
+      state.weatherDataLastFetch = payload;
     }
   },
   actions: {
     loadWeatherData({ commit }) {
-      console.log("load data ...");
       axios
         .get(process.env.VUE_APP_HOMESCREEN_SERVER_URL + "/data")
         .then(function(response) {

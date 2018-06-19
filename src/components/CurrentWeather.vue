@@ -7,18 +7,21 @@
     </div>
 
     <div>
+      <h3>Temperature</h3>
       <div class="display-text-large">
-        {{ currentTemperature }} <i class="wi wi-fahrenheit"></i>
+        {{ currentTemperature }}<sup>&deg;F</sup>
       </div>
     </div>
 
     <div>
+      <h3>Humidity</h3>
       <div class="display-text-large">
-        {{ currentHumidity }} <i class="wi wi-humidity"></i>
+        {{ currentHumidity }}<sup>%</sup>
       </div>
     </div>
 
     <div>
+      <h3>Wind</h3>
       <div class="display-text-large">
         <wind-widget v-bind="currentWind"></wind-widget>
       </div>
@@ -74,7 +77,7 @@ export default {
   grid-template-rows: 1fr, 1.5rem
   height: 100%
   width: 100%
-  background: #444
+  background: #000
   color: #fff
 
   &>div
@@ -86,6 +89,13 @@ export default {
   line-height: 1.5rem
   text-align: center
   grid-column: 1 / 5
+
+.wi-humidity
+  // color: #8af
+  font-size: 8vh
+
+sup
+  font-size: 8vh
 
 
 

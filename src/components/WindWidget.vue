@@ -1,6 +1,6 @@
 <template>
 <div>
-  <span class="wind-speed">{{ speedMph }}</span>
+  {{ speedMph }}<sup>MPH</sup>
 </div>
 </template>
 
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.wind-speed
-  display: inline-block
+sup
+  font-size: 4vh
   
 </style>

@@ -15,7 +15,7 @@ export default {
   created() {
     let me = this;
     this.loadWeatherData();
-    window.setInterval(me.loadWeatherData, 1 * 60 * 1000);
+    window.setInterval(me.loadWeatherData, 5 * 60 * 1000);
   },
   computed: {
     ...mapState(["weatherData"])
