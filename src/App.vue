@@ -14,6 +14,8 @@ export default {
   },
   created() {
     let me = this;
+    this.setCurrentDate();
+    window.setInterval(me.setCurrentDate, 1 * 60 * 1000);
     this.loadWeatherData();
     window.setInterval(me.loadWeatherData, 1 * 60 * 1000);
   },
@@ -21,15 +23,17 @@ export default {
     ...mapState(["weatherData"])
   },
   methods: {
-    ...mapActions(["loadWeatherData"])
+    ...mapActions(["loadWeatherData", "setCurrentDate"])
   }
 };
 </script>
 
 <style lang="sass">
-html, body
+*
   margin: 0
   padding: 0
+
+html, body
   overflow: hidden
 
 body
@@ -38,8 +42,7 @@ body
   -moz-osx-font-smoothing: grayscale
   color: #2c3e50
 
+h1, h2, h3, h4, h5, h6
+  font-weight: normal
 
-.display-text-large
-  font-size: 15vh
-  line-height: 15vh
 </style>

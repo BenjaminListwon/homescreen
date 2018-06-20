@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.38fdc889c223ff0d7bc5446be0e29284.js"
+  "/precache-manifest.24e81760f0e99e01a907412b030e4de9.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "homescreen"});

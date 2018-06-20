@@ -1,52 +1,84 @@
 <template>
-<div class="date">
-  <span>{{ currDayName }}</span>
-  <div class="display-text-large">
+<div class="date-display">
+  <transition name="fade" mode="out-in">
+    <span v-bind:key="dateKey">
+      {{ datePart }}
+    </span>
+  </transition>
+
+    <!-- {{ currDayName }}
     {{ currMonthName }} {{ currDay }}
-  </div>
-  <span>{{ currYear }}</span>
+    {{ currYear }} -->
 </div>
 </template>
 
 <script>
-import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   name: "the-day",
   data() {
     return {
-      timeObj: null
+      dateKeys: ["DAY_NAME", "MONTH_NAME_DAY_NUMBER", "YEAR_NUMBER"],
+      dateKeyIndex: 0
     };
   },
   computed: {
+    ...mapState(["currentDate"]),
     currDayName() {
-      return this.timeObj.format("dddd");
+      return this.currentDate.format("dddd");
     },
     currDay() {
-      return this.timeObj.format("D");
+      return this.currentDate.format("D");
     },
     currMonthName() {
-      return this.timeObj.format("MMMM");
+      return this.currentDate.format("MMMM");
     },
     currYear() {
-      return this.timeObj.format("YYYY");
+      return this.currentDate.format("YYYY");
+    },
+    datePart() {
+      switch (this.dateKey) {
+        case "DAY_NAME":
+          return this.currDayName;
+        case "MONTH_NAME_DAY_NUMBER":
+          return this.currMonthName + " " + this.currDay;
+        case "YEAR_NUMBER":
+          return this.currYear;
+      }
+    },
+    dateKey() {
+      return this.dateKeys[this.dateKeyIndex];
     }
   },
   created() {
-    this.timeObj = moment();
+    let me = this;
+    window.setInterval(this.rotateDateKey, 10 * 1000);
+  },
+  methods: {
+    rotateDateKey() {
+      if (this.dateKeyIndex == 2) {
+        this.dateKeyIndex = 0;
+      } else {
+        this.dateKeyIndex += 1;
+      }
+    }
   }
 };
 </script>
 
 <style lang="sass" scoped>
-.date
+.date-display
   text-align: center
 
-  
   span
-    font-size: 2rem
-    line-height: 2rem
-    text-transform: uppercase
-    display: block
-    color: #888
+    font-size: 15vh
+    line-height: 15vh
+
+
+.fade-enter-active, .fade-leave-active
+  transition: opacity 0.7s ease-out
+
+.fade-enter, .fade-leave-to
+  opacity: 0
 </style>

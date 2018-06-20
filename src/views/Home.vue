@@ -45,8 +45,8 @@ export default {
 .grid-layout-app
   display: grid
   grid-gap: 0px
-  grid-template-columns: repeat(2, 1fr)
-  grid-template-rows: repeat(2, 1fr)
+  grid-template-columns: 60% 40%
+  grid-template-rows: 45% 55%
   grid-template-areas: "theday thetime" "weather weather"
   background-color: #fff
   color: #444

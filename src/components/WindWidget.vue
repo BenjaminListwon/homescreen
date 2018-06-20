@@ -1,6 +1,6 @@
 <template>
 <div>
-  {{ speedMph }}<sup>MPH</sup>
+  {{ speedMph }}<sub><i class="wi wi-wind wi-from-nnw"></i></sub><sup>MPH</sup>
 </div>
 </template>
 
@@ -59,7 +59,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-sup
+sup, sub
   font-size: 4vh
+
+sub
+  float: right
+
   
 </style>

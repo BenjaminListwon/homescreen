@@ -1,7 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import request from "request";
+import moment from "moment";
 
 Vue.use(Vuex);
 
@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     weatherData: {},
     weatherDataLoaded: false,
-    weatherDataLastFetch: null
+    weatherDataLastFetch: null,
+    currentDate: null
   },
   mutations: {
     SET_WEATHER_DATA(state, payload) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     SET_WEATHER_DATA_LAST_FETCH(state, payload) {
       state.weatherDataLastFetch = payload;
+    },
+    SET_CURRENT_DATE(state) {
+      state.currentDate = moment();
     }
   },
   actions: {
@@ -30,6 +34,9 @@ export default new Vuex.Store({
           commit("SET_WEATHER_DATA", response.data);
           commit("SET_WEATHER_DATA_LOADED", true);
         });
+    },
+    setCurrentDate({ commit }) {
+      commit("SET_CURRENT_DATE");
     }
   },
   getters: {

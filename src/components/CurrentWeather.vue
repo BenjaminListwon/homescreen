@@ -1,35 +1,67 @@
 <template>
-  <div class="grid-layout-weather">
-    <div>
-      <div class="display-text-large">
-        <icon-widget :icon="currentIcon"></icon-widget>
+  <div class="grid-layout-weather-container">
+    <!-- Top Row -->
+    <header class="weather-header">
+      <h2 class="weather-header__title">Current Conditions</h2>
+    </header>
+
+    <!-- Center Row -->
+    <div class="grid-layout-weather-panels">
+      <!-- First Panel -->
+      <div class="weather-panel" @click="flipContents">
+        <div class="weather-card weather-card--front">
+          <div class="weather-card__content">
+            <icon-widget :icon="currentIcon"></icon-widget>
+          </div>
+        </div>
+        <div class="weather-card weather-card--back">
+          <div class="weather-card__content">
+            <icon-widget icon="wind"></icon-widget>
+          </div>
+        </div>
+      </div>
+      <!-- Second Panel -->
+      <div class="weather-panel">
+        <div class="weather-card weather-card--front">
+          <div class="weather-card__content">
+            <!-- <header class="weather-card__content__header">
+              <h3 class="weather-card__content__title">Temperature</h3>
+            </header> -->
+            <p>
+              {{ currentTemperature }}<sup>&deg;F</sup>
+              <label><i class="wi wi-thermometer-exterior"></i></label>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Third Panel -->
+      <div class="weather-panel">
+        <div class="weather-card weather-card--front">
+          <div class="weather-card__content">
+            <p>
+              {{ currentHumidity }}<sup>%</sup>
+              <label><i class="wi wi-humidity"></i></label>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Fourth Panel -->
+      <div class="weather-panel">
+        <div class="weather-card weather-card--front">
+          <div class="weather-card__content">
+            <p>
+              <wind-widget v-bind="currentWind"></wind-widget>
+              <label><i class="wi wi-strong-wind"></i></label>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div>
-      <h3>Temperature</h3>
-      <div class="display-text-large">
-        {{ currentTemperature }}<sup>&deg;F</sup>
-      </div>
-    </div>
-
-    <div>
-      <h3>Humidity</h3>
-      <div class="display-text-large">
-        {{ currentHumidity }}<sup>%</sup>
-      </div>
-    </div>
-
-    <div>
-      <h3>Wind</h3>
-      <div class="display-text-large">
-        <wind-widget v-bind="currentWind"></wind-widget>
-      </div>
-    </div>
-
-    <div class="update-info">
+    <!-- Bottom Row -->
+    <footer class="weather-update-info">
       <span>Last updated: {{ lastFetch }}</span>
-    </div>
+    </footer>
   </div>
 </template>
 
@@ -65,30 +97,112 @@ export default {
       currentIcon: "getCurrentIcon",
       lastFetch: "getLastFetchDate"
     })
+  },
+  methods: {
+    flipContents: event => {
+      let clicked = event.target;
+      let parent = clicked.parentNode;
+      let kids = parent.querySelectorAll(".weather-card");
+      for (var i = 0; i < kids.length; i++) {
+        kids[i].classList.add("weather-card--flipped");
+      }
+    }
   }
 };
 </script>
 
 <style lang="sass" scoped>
-.grid-layout-weather
+.grid-layout-weather-container
+  height: 100%
+  width: 100%
+  background: #fff
+  color: #000
+  display: grid
+  grid-gap: 0px
+  grid-template-rows: 5rem calc(100% - 6.5rem) 1.5rem
+
+
+.grid-layout-weather-panels
+  height: 100%
+  width: 100%
   display: grid
   grid-gap: 0px
   grid-template-columns: repeat(4, 1fr)
-  grid-template-rows: 1fr, 1.5rem
-  height: 100%
-  width: 100%
+  
+
+.weather-panel
+  position: relative
+  width: inherit
+  height: inherit
+
+.weather-card
+  display: grid
+  width: inherit
+  height: inherit
+  transition: ease-in 1000ms
+  backface-visibility: hidden
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
   background: #000
   color: #fff
+  box-shadow: 0px 0px 35px rgba(0,0,0,0.7)
 
-  &>div
+  // Trigger HA
+  transform: rotateZ(0deg)
+
+  .weather-card__content
     align-self: center
     justify-self: center
 
-.update-info
+    p
+      font-size: 15vh
+      line-height: 15vh
+      text-align: center
+
+      label
+        display: block
+        line-height: 8vh
+
+        .wi
+          font-size: 5vh
+          
+
+
+.weather-card--front
+  transform: rotateY(0deg)
+
+  &.weather-card--flipped
+    transform: rotateY(180deg)
+
+
+.weather-card--back
+  transform: rotateY(180deg)
+  
+  &.weather-card--flipped
+    transform: rotateY(0deg)
+  
+
+
+.weather-header
+  background: #000
+  color: #fff
+
+  .weather-header__title  
+    font-size: 2.5rem
+    line-height: 5rem
+    text-align: center
+
+.weather-update-info
+  background: #000
+  color: #fff
   font-size: 0.75rem
   line-height: 1.5rem
   text-align: center
-  grid-column: 1 / 5
+
+
 
 .wi-humidity
   // color: #8af

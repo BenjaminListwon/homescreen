@@ -41,4 +41,7 @@ export default {
 
 .wi-forecast-io-clear-day
   color: #fc0
+
+.wi-forecast-io-partly-cloudy-day
+  color: #ddd
 </style>

@@ -1,15 +1,11 @@
 <template>
-  <div class="time">
-    <span>&nbsp;</span>
-    <div class="display-text-large">
-      {{ currFullTime }}
-    </div>
-    <span>{{ currTimeAmPm }}</span>
+  <div class="time-display">
+    <p>{{ currFullTime }} <span>{{ currTimeAmPm }}</span></p>
   </div>
 </template>
 
 <script>
-import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   name: "the-time",
@@ -19,34 +15,28 @@ export default {
     };
   },
   computed: {
+    ...mapState(["currentDate"]),
     currFullTime() {
-      return this.timeObj.format("h:mm");
+      return this.currentDate.format("h:mm");
     },
     currTimeAmPm() {
-      return this.timeObj.format("a");
-    }
-  },
-  created() {
-    this.getTime();
-    let me = this;
-    window.setInterval(me.getTime, 5000);
-  },
-  methods: {
-    getTime() {
-      this.timeObj = moment();
+      return this.currentDate.format("a");
     }
   }
 };
 </script>
 
 <style lang="sass" scoped>
-.time
+.time-display
   text-align: center
 
+  p
+    font-size: 15vh
+    line-height: 15vh
+
   span
-    font-size: 2rem
-    line-height: 2rem
+    font-size: 7.5vh
+    line-height: 7.5vh
     text-transform: uppercase
-    display: block
     color: #888
 </style>
